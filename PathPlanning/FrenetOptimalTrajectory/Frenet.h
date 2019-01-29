@@ -1,0 +1,59 @@
+#ifndef _FRENET_H_
+#define _FRENET_H_
+#endif
+#include <iostream>
+#include <vector>
+#include <opencv.hpp>
+#include <math.h>
+using namespace std;
+#define MAX_SPEED 50.0/3.6  //maximum speed [m/s]
+#define MAX_ACCEL 2.0  //maximum acceleration [m/ss]
+#define MAX_CURVATURE 1.0  //maximum curvature [1/m]
+#define MAX_ROAD_WIDTH 7.0  //maximum road width [m]
+#define D_ROAD_W 1.0  //road width sampling length [m]
+#define DT 0.2  //time tick [s]
+#define MAXT 5.0  //max prediction time [m]
+#define MINT 4.0  //min prediction time [m]
+#define TARGET_SPEED 30.0 / 3.6  //target speed [m/s]
+#define D_T_S 5.0 / 3.6  //target speed sampling length [m/s]
+#define N_S_SAMPLE 1  //sampling number of target speed
+#define ROBOT_RADIUS 2.0  //robot radius [m]
+//cost weights
+#define KJ 0.1
+#define KT 0.1
+#define KD 1.0
+#define KLAT 1.0
+#define KLON 1.0
+
+struct Frenet{
+    vector<float> t,d,d_d,d_dd,d_ddd,s,s_d,s_dd,s_ddd,x,y,yaw,ds,c;
+    float cd,cv,cf;
+};
+class quintic_polynomial{
+private:
+    float a0,a1,a2,a3,a4,a5;
+public:
+    quintic_polynomial(const float xs[3],const float xe[3],const float& T);
+    float calc_point(float& t);
+    float calc_first_derivative(float& t);
+    float calc_second_derivative(float& t);
+    float calc_third_derivative(float& t);
+};
+
+class quartic_polynomial{
+private:
+    float a0,a1,a2,a3,a4;
+public:
+    quartic_polynomial(const float xs[3],const float xe[3],const float& T);
+    float calc_point(float& t);
+    float calc_first_derivative(float& t);
+    float calc_second_derivative(float& t);
+    float calc_third_derivative(float& t);
+};
+
+vector<Frenet> calc_frenet_paths(const float& c_speed,const float c[3],const float& s0);
+
+vector<Frenet> calc_global_paths(const vector<Frenet>& fplist,const vector<cv::Point>& csp);
+
+Frenet check_paths();
+
