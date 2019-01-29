@@ -14,8 +14,8 @@ int main(int argc, char const *argv[])
     tracker = cv::TrackerKCF::create();
     cv::Rect2d initBB;//初始目标坐标
     //Read video
-    cv::VideoCapture cap("D:\\Code\\C++\\YOLO3-detecction\\run.mp4");
-    // cv::VideoCapture cap(0);
+    // cv::VideoCapture cap("D:\\Code\\C++\\YOLO3-detecction\\run.mp4");
+    cv::VideoCapture cap(0);
     //创建窗口
     static const string kWinName = "object tracking in OpenCV";
     cv::namedWindow(kWinName,cv::WINDOW_AUTOSIZE);

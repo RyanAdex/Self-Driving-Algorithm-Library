@@ -19,14 +19,15 @@ vector<cv::String> getOutputNames(const cv::dnn::Net& net);
 main(int argc, char const *argv[])
 {
     //将类名存进容器
-    string classesFile = "D:\\Code\\C++\\YOLO3-detecction\\coco.names";//coco.names包含80种不同的类名
+    string filepath = "D:\\Code\\C++\\Self-Driving-Algorithm-Library\\ComputerVision\\YOLO3-detection";
+    string classesFile = filepath+"\\coco.names";//coco.names包含80种不同的类名
     ifstream ifs(classesFile.c_str());
     string line;
     while(getline(ifs,line))classes.push_back(line);
 
     //取得模型的配置和权重文件
-    cv::String modelConfiguration = "D:\\Code\\C++\\YOLO3-detecction\\yolov3.cfg";
-    cv::String modelWeights = "D:\\Code\\C++\\YOLO3-detecction\\yolov3.weights";
+    cv::String modelConfiguration = filepath+"\\yolov3.cfg";
+    cv::String modelWeights = filepath+"\\yolov3.weights";
 
     //加载网络
     cv::dnn::Net net = cv::dnn::readNetFromDarknet(modelConfiguration,modelWeights);
@@ -35,11 +36,11 @@ main(int argc, char const *argv[])
 
     //打开视频文件或者图形文件或者相机数据流
     string str, outputFile;
-    cv::VideoCapture cap("D:\\Code\\C++\\YOLO3-detecction\\run.mp4");
+    // cv::VideoCapture cap("D:\\Code\\C++\\YOLO3-detecction\\run.mp4");
     cv::VideoWriter video;
     cv::Mat frame,blob;
     //开启摄像头
-    // cv::VideoCapture cap(1);
+    cv::VideoCapture cap(0);
     //创建窗口
     static const string kWinName = "Deep learning object detection in OpenCV";
     cv::namedWindow(kWinName,cv::WINDOW_AUTOSIZE);

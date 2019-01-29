@@ -20,8 +20,7 @@ SET( LIB_PROJECT
             opencv_imgproc400
             opencv_imgcodecs400
             opencv_videoio400
-            opencv_dnn400
-            opencv_tracking400)
+            opencv_dnn400)
 # 指定执行文件输出目录
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 # 生成可执行文件，即程序
