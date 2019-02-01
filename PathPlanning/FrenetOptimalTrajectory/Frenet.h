@@ -1,10 +1,11 @@
-#ifndef _FRENET_H_
-#define _FRENET_H_
+#ifndef FRENET_H
+#define FRENET_H
 #endif
 #include <iostream>
 #include <vector>
 #include <opencv.hpp>
 #include <math.h>
+#include <./splines-lib/Splines.h>
 using namespace std;
 #define MAX_SPEED 50.0/3.6  //maximum speed [m/s]
 #define MAX_ACCEL 2.0  //maximum acceleration [m/ss]
@@ -50,7 +51,7 @@ public:
     float calc_second_derivative(float& t);
     float calc_third_derivative(float& t);
 };
-
+//计算所有局部路径
 vector<Frenet> calc_frenet_paths(const float& c_speed,const float c[3],const float& s0);
 
 vector<Frenet> calc_global_paths(const vector<Frenet>& fplist,const vector<cv::Point>& csp);
