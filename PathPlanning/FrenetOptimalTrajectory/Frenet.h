@@ -5,7 +5,7 @@
 #include <vector>
 #include <opencv.hpp>
 #include <math.h>
-#include <./splines-lib/Splines.h>
+#include <./cubicSplines.h>
 using namespace std;
 #define MAX_SPEED 50.0/3.6  //maximum speed [m/s]
 #define MAX_ACCEL 2.0  //maximum acceleration [m/ss]
@@ -27,34 +27,36 @@ using namespace std;
 #define KLON 1.0
 
 struct Frenet{
-    vector<float> t,d,d_d,d_dd,d_ddd,s,s_d,s_dd,s_ddd,x,y,yaw,ds,c;
-    float cd,cv,cf;
+    vector<double> t,d,d_d,d_dd,d_ddd,s,s_d,s_dd,s_ddd,x,y,yaw,ds,c;
+    double cd,cv,cf;
 };
 class quintic_polynomial{
 private:
-    float a0,a1,a2,a3,a4,a5;
+    double a0,a1,a2,a3,a4,a5;
 public:
-    quintic_polynomial(const float xs[3],const float xe[3],const float& T);
-    float calc_point(float& t);
-    float calc_first_derivative(float& t);
-    float calc_second_derivative(float& t);
-    float calc_third_derivative(float& t);
+    quintic_polynomial(const double xs[3],const double xe[3],const double& T);
+    double calc_point(double& t);
+    double calc_first_derivative(double& t);
+    double calc_second_derivative(double& t);
+    double calc_third_derivative(double& t);
 };
 
 class quartic_polynomial{
 private:
-    float a0,a1,a2,a3,a4;
+    double a0,a1,a2,a3,a4;
 public:
-    quartic_polynomial(const float xs[3],const float xe[3],const float& T);
-    float calc_point(float& t);
-    float calc_first_derivative(float& t);
-    float calc_second_derivative(float& t);
-    float calc_third_derivative(float& t);
+    quartic_polynomial(const double xs[3],const double xe[3],const double& T);
+    double calc_point(double& t);
+    double calc_first_derivative(double& t);
+    double calc_second_derivative(double& t);
+    double calc_third_derivative(double& t);
 };
 //计算所有局部路径
-vector<Frenet> calc_frenet_paths(const float& c_speed,const float c[3],const float& s0);
+vector<Frenet> calc_frenet_paths(const double& c_speed,const double c[3],const double& s0);
 
-vector<Frenet> calc_global_paths(const vector<Frenet>& fplist,const vector<cv::Point>& csp);
+void calc_global_paths(const vector<Frenet>& fplist,const vector<cv::Point>& csp);
+
+bool check_collision(const Frenet& fp,const vector<cv::Point2d>& ob);
 
 Frenet check_paths();
 

@@ -41,7 +41,7 @@ private:
     }
     int search_index(const double& x){
         auto lower = std::lower_bound(spl.x.begin(),spl.x.end(), x);
-        return std::distance(spl.x.begin(),lower)
+        return std::distance(spl.x.begin(),lower);
     }
 public:
     void Spline(const cv::Mat_<double>& x,const cv::Mat_<double>& y){
@@ -55,7 +55,7 @@ public:
         }
         cv::solve(calc_A(),calc_B(),spl.c,cv::DECOMP_LU);
         for(auto i=0;i<splnum;i++){
-            spl.d.push_back(spl.c(i+1)-spl.c(i)/(3*spl.h(i));
+            spl.d.push_back(spl.c(i+1)-spl.c(i)/(3*spl.h(i)));
             spl.b.push_back(spl.a(i+1)-spl.a(i)/spl.h(i)-spl.h(i)*(spl.c(i+1)+2*spl.c(i)/3));
         }
     }
