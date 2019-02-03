@@ -132,3 +132,24 @@ void calc_global_paths(vector<Frenet>& fplist,cubicSpline2D& csp){
     }
 }
 
+bool check_collision(const Frenet& fp,const vector<cv::Point2d>& ob){
+    for(auto& obp:ob){
+        for(auto i=0;i<fp.x.size();i++){
+            if(pow(fp.x[i]-obp.x,2)+pow(fp.y[i]-obp.y,2)<=pow(ROBOT_RADIUS,2))return false;
+        }
+    }
+    return true;
+}
+//过滤掉不合格的轨迹
+vector<Frenet> check_paths(const vector<Frenet>& fplist,const vector<cv::Point2d>& ob){
+    vector<Frenet> goodfplist;
+    for(auto& fp:fplist){
+        for(auto& v:fp.s_d)if(v>MAX_SPEED)continue;
+        for(auto& a:fp.s_dd)if(abs(a)>MAX_ACCEL)continue;
+        for(auto& c:fp.c)if(abs(c)>MAX_CURVATURE)continue;
+        if(!check_collision(fp,ob))continue;
+
+        goodfplist.push_back(fp);
+    }
+    return goodfplist;
+}

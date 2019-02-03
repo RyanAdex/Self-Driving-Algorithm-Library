@@ -58,5 +58,5 @@ void calc_global_paths(const vector<Frenet>& fplist,const vector<cv::Point>& csp
 
 bool check_collision(const Frenet& fp,const vector<cv::Point2d>& ob);
 
-Frenet check_paths();
+vector<Frenet> check_paths(const vector<Frenet>& fplist,const vector<cv::Point2d>& ob);
 
