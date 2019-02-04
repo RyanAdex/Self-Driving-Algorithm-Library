@@ -60,3 +60,4 @@ bool check_collision(const Frenet& fp,const vector<cv::Point2d>& ob);
 
 vector<Frenet> check_paths(const vector<Frenet>& fplist,const vector<cv::Point2d>& ob);
 
+Frenet frenet_optimal_planning(const vector<cv::Point>& csp,const double& c_speed,const double c[3],const double& s0);

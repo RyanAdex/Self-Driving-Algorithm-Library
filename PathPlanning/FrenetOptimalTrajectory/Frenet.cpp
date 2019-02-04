@@ -153,3 +153,18 @@ vector<Frenet> check_paths(const vector<Frenet>& fplist,const vector<cv::Point2d
     }
     return goodfplist;
 }
+Frenet frenet_optimal_planning(const vector<cv::Point>& csp,const double& c_speed,const double c[3],const double& s0){
+    auto fplist=calc_frenet_paths(c_speed,c,s0);
+    calc_global_paths(fplist,csp);
+    auto goodfplist=check_paths(fplist,ob);
+    Frenet bestpath;
+    double mincost=fplist[0].cf;
+    for(auto& fp:fplist){
+        if(mincost>=fp.cf){
+            mincost=fp.cf;
+            bestpath=fp;
+        }
+    }
+
+    return bestpath;
+}
